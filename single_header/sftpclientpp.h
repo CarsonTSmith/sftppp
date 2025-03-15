@@ -190,7 +190,7 @@ SFTPError SFTPClient::connect(const std::string& host, const std::string& user,
     }
 
     rc = sftp_init(m_sftpSession.get());
-    if (rc != SSH_OK) {
+    if (rc < 0) {
         return SFTPError(ssh_get_error_code(m_sshSession.get()),
                          sftp_get_error(m_sftpSession.get()), ssh_get_error(m_sshSession.get()));
     }
@@ -318,7 +318,7 @@ SFTPError SFTPClient::mkdir(const std::string& remoteDir, const mode_t permissio
     }
 
     int rc = sftp_mkdir(m_sftpSession.get(), remoteDir.c_str(), permissions);
-    if (rc != SSH_OK) {
+    if (rc < 0) {
         return SFTPError(rc, sftp_get_error(m_sftpSession.get()),
                          ssh_get_error(m_sshSession.get()));
     }
@@ -377,7 +377,7 @@ SFTPError SFTPClient::rm(const std::string& remoteFileName) {
     }
 
     int rc = sftp_unlink(m_sftpSession.get(), remoteFileName.c_str());
-    if (rc != SSH_OK) {
+    if (rc < 0) {
         return SFTPError(ssh_get_error_code(m_sshSession.get()),
                          sftp_get_error(m_sftpSession.get()),
                          "Failed to remove remote file [" + remoteFileName + "] " +
@@ -393,7 +393,7 @@ SFTPError SFTPClient::rmdir(const std::string& remoteDir) {
     }
 
     int rc = sftp_rmdir(m_sftpSession.get(), remoteDir.c_str());
-    if (rc != SSH_OK) {
+    if (rc < 0) {
         return SFTPError(
             ssh_get_error_code(m_sshSession.get()), sftp_get_error(m_sftpSession.get()),
             "Failed to remove remote dir [" + remoteDir + "] " + ssh_get_error(m_sshSession.get()));
