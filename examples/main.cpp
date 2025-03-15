@@ -42,7 +42,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl;
+                  << std::endl
         ;
     }
 
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl;
+                  << std::endl
         ;
     }
 
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl;
+                  << std::endl
         ;
     }
 
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl;
+                  << std::endl
         ;
     }
 
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl;
+                  << std::endl
         ;
     }
 
