@@ -70,22 +70,22 @@ class SFTPClient {
     void disconnect();
 
     SFTPError put(const std::string& localFileName, const std::string& remoteFileName,
-                  unsigned int chunkSize = kDefaultChunkSize);
+                  unsigned int chunkSize = kDefaultChunkSize) const;
 
     SFTPError get(const std::string& localFileName, const std::string& remoteFileName,
-                  unsigned int chunkSize = kDefaultChunkSize);
+                  unsigned int chunkSize = kDefaultChunkSize) const;
 
-    SFTPError mkdir(const std::string& remoteDir, const mode_t permissions);
+    SFTPError mkdir(const std::string& remoteDir, const mode_t permissions) const;
 
-    std::pair<SFTPError, std::vector<SFTPAttributes>> ls(const std::string& remoteDir);
+    std::pair<SFTPError, std::vector<SFTPAttributes>> ls(const std::string& remoteDir) const;
 
-    SFTPError rename(const std::string& oldRemoteName, const std::string& newRemoteName);
+    SFTPError rename(const std::string& oldRemoteName, const std::string& newRemoteName) const;
 
-    SFTPError rm(const std::string& remoteFileName);
+    SFTPError rm(const std::string& remoteFileName) const;
 
-    SFTPError rmdir(const std::string& remoteDirName);
+    SFTPError rmdir(const std::string& remoteDirName) const;
 
-    std::pair<SFTPError, SFTPAttributes> stat(const std::string& remotePath);
+    std::pair<SFTPError, SFTPAttributes> stat(const std::string& remotePath) const;
 
    private:
     SFTPClient& operator=(const SFTPClient&) = delete;

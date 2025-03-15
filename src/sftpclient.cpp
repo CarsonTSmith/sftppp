@@ -78,7 +78,7 @@ void SFTPClient::disconnect() {
 }
 
 SFTPError SFTPClient::put(const std::string& localFileName, const std::string& remoteFileName,
-                          unsigned int chunkSize) {
+                          unsigned int chunkSize) const {
     if (!m_sftpSession || !m_sshSession) {
         return SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session");
     }
@@ -130,7 +130,7 @@ SFTPError SFTPClient::put(const std::string& localFileName, const std::string& r
 }
 
 SFTPError SFTPClient::get(const std::string& remoteFileName, const std::string& localFileName,
-                          unsigned int chunkSize) {
+                          unsigned int chunkSize) const {
     if (!m_sftpSession.get() || !m_sshSession.get()) {
         return SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session");
     }
@@ -186,7 +186,7 @@ SFTPError SFTPClient::get(const std::string& remoteFileName, const std::string& 
     return SFTPError();
 }
 
-SFTPError SFTPClient::mkdir(const std::string& remoteDir, const mode_t permissions) {
+SFTPError SFTPClient::mkdir(const std::string& remoteDir, const mode_t permissions) const {
     if (!m_sftpSession.get() || !m_sshSession.get()) {
         return SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session");
     }
@@ -200,7 +200,8 @@ SFTPError SFTPClient::mkdir(const std::string& remoteDir, const mode_t permissio
     return SFTPError();
 }
 
-std::pair<SFTPError, std::vector<SFTPAttributes>> SFTPClient::ls(const std::string& remoteDir) {
+std::pair<SFTPError, std::vector<SFTPAttributes>> SFTPClient::ls(
+    const std::string& remoteDir) const {
     if (!m_sftpSession.get() || !m_sshSession.get()) {
         return {SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session"), {}};
     }
@@ -231,7 +232,8 @@ std::pair<SFTPError, std::vector<SFTPAttributes>> SFTPClient::ls(const std::stri
     return {SFTPError(SSH_OK, SSH_FX_OK), std::move(attributesList)};
 }
 
-SFTPError SFTPClient::rename(const std::string& oldRemoteName, const std::string& newRemoteName) {
+SFTPError SFTPClient::rename(const std::string& oldRemoteName,
+                             const std::string& newRemoteName) const {
     if (!m_sftpSession.get() || !m_sshSession.get()) {
         return SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session");
     }
@@ -245,7 +247,7 @@ SFTPError SFTPClient::rename(const std::string& oldRemoteName, const std::string
     return SFTPError();
 }
 
-SFTPError SFTPClient::rm(const std::string& remoteFileName) {
+SFTPError SFTPClient::rm(const std::string& remoteFileName) const {
     if (!m_sftpSession.get() || !m_sshSession.get()) {
         return SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session");
     }
@@ -261,7 +263,7 @@ SFTPError SFTPClient::rm(const std::string& remoteFileName) {
     return SFTPError();
 }
 
-SFTPError SFTPClient::rmdir(const std::string& remoteDir) {
+SFTPError SFTPClient::rmdir(const std::string& remoteDir) const {
     if (!m_sftpSession.get() || !m_sshSession.get()) {
         return SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session");
     }
@@ -276,7 +278,7 @@ SFTPError SFTPClient::rmdir(const std::string& remoteDir) {
     return SFTPError();
 }
 
-std::pair<SFTPError, SFTPAttributes> SFTPClient::stat(const std::string& remotePath) {
+std::pair<SFTPError, SFTPAttributes> SFTPClient::stat(const std::string& remotePath) const {
     if (!m_sftpSession.get() || !m_sshSession.get()) {
         return {SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session"), {}};
     }
