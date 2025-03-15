@@ -3,8 +3,7 @@ A C++11 OOP wrapper around the sftp api provided by libssh. It may be used as he
 
 To build the shared library: clone the repositoy and use CMake. In the root directory run the following commands,
 
-cmake -B build
-cmake --build build --config Release
+cmake -B build && cmake --build build --config Release
 
 The shared library will appear in the /target directory.
 
