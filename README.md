@@ -5,7 +5,7 @@ To build the shared library: clone the repositoy and use CMake. In the root dire
 
 cmake -B build && cmake --build build --config Release
 
-The shared library will appear in the /target directory.
+The shared library will appear in /target
 
 
 To compile the example cd /examples and run the compile command
