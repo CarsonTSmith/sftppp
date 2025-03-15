@@ -36,7 +36,7 @@
     #define S_IWUSR _S_IWRITE  // Write permission for user
 #endif
 #ifndef O_RDONLY
-    #define O_RDONLY _O_RDONLY  // Write permission for user
+    #define O_RDONLY _O_RDONLY
 #endif
 #elif _POSIX_VERSION
 #include <fcntl.h>     // O_WRONLY, O_CREAT, O_TRUNC
