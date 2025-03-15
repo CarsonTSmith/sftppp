@@ -103,10 +103,8 @@ class SFTPClient {
     SFTPClient() = default;
     ~SFTPClient();
 
-    SFTPClient(const SFTPClient&) = default;
     SFTPClient(SFTPClient&&) = default;
 
-    SFTPClient& operator=(const SFTPClient&) = default;
     SFTPClient& operator=(SFTPClient&&) = default;
 
     SFTPError connect(const std::string& host, const std::string& user, const std::string& pw,
@@ -133,6 +131,9 @@ class SFTPClient {
     std::pair<SFTPError, SFTPAttributes> stat(const std::string& remotePath);
 
    private:
+    SFTPClient& operator=(const SFTPClient&) = delete;
+    SFTPClient(const SFTPClient&) = delete;
+
     struct SSHSessionDeleter {
         void operator()(ssh_session session) const;
     };
