@@ -67,7 +67,7 @@ class SFTPClient {
     SFTPClient& operator=(SFTPClient&&) = default;
 
     SFTPError connect(const std::string& host, const std::string& user, const std::string& pw,
-                      const uint16_t port = 22);
+                      const uint16_t port = 22, const bool onlyKnownServers = true);
 
     void disconnect();
 

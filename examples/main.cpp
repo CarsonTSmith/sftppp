@@ -29,6 +29,14 @@ int main(int argc, char **argv) {
     SFTPError ret = client.connect("127.0.0.1", "username", "password");
     if (ret.isOk()) {
         std::cout << "Connected!" << std::endl;
+    } else {
+        std::cout << "Failed to connect: "
+                  << ret.getSSHErrorCode() 
+                  << " " 
+                  << ret.getSFTPErrorCode()
+                  << " "
+                  << ret.getSSHErrorMsg()
+                  << std::endl;
     }
 
     ret = client.mkdir("/my/remote/dir", 0777);
@@ -41,8 +49,7 @@ int main(int argc, char **argv) {
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl
-        ;
+                  << std::endl;
     }
 
     ret = client.put("/my/local/file.txt", "/my/remote/file.txt");
@@ -55,8 +62,7 @@ int main(int argc, char **argv) {
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl
-        ;
+                  << std::endl;
     }
 
     auto statPair = client.stat("/my/remote/file.txt");

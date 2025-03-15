@@ -110,7 +110,7 @@ class SFTPClient {
     SFTPClient& operator=(SFTPClient&&) = default;
 
     SFTPError connect(const std::string& host, const std::string& user, const std::string& pw,
-                      const uint16_t port = 22);
+                      const uint16_t port = 22, const bool onlyKnownServers = true);
 
     void disconnect();
 
@@ -158,7 +158,8 @@ class SFTPClient {
 SFTPClient::~SFTPClient() { disconnect(); }
 
 SFTPError SFTPClient::connect(const std::string& host, const std::string& user,
-                              const std::string& pw, const uint16_t port) {
+                              const std::string& pw, const uint16_t port,
+                              const bool onlyKnownServers) {
     m_sshSession = SSHSessionPtr(ssh_new());
     if (!m_sshSession) {
         return SFTPError(SSH_ERROR, SSH_FX_OK, "Failed to create ssh session.");
@@ -173,10 +174,14 @@ SFTPError SFTPClient::connect(const std::string& host, const std::string& user,
         return SFTPError(rc, SSH_FX_OK, ssh_get_error(m_sshSession.get()));
     }
 
-    // rc = verify_knownhost(m_sshSession.get());
-    // if (rc < 0) {
-    //     return SFTPError(rc, ssh_get_error(m_sshSession.get()));
-    // }
+    if (onlyKnownServers) {
+        const auto res = ssh_session_is_known_server(m_sshSession.get());
+        if (res != SSH_KNOWN_HOSTS_OK) {
+            return SFTPError(ssh_get_error_code(m_sshSession.get()),
+                             sftp_get_error(m_sftpSession.get()),
+                             ssh_get_error(m_sshSession.get()));
+        }
+    }
 
     rc = ssh_userauth_password(m_sshSession.get(), nullptr, pw.c_str());
     if (rc != SSH_AUTH_SUCCESS) {
