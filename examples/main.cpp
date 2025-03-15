@@ -42,6 +42,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
+                  << std::endl;
         ;
     }
 
@@ -55,6 +56,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
+                  << std::endl;
         ;
     }
 
@@ -68,6 +70,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
+                  << std::endl;
         ;
     }
 
@@ -81,11 +84,12 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
+                  << std::endl;
         ;
     }
 
     auto pair = client.ls("/my/remote/dir");
-    if (ret.isOk()) {
+    if (pair.first.isOk()) {
         std::cout << "Listing remote directory!" << std::endl;
         for (const auto &item: pair.second) {
             std::cout << "File name: " << item.get()->name << std::endl;
@@ -106,6 +110,7 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
+                  << std::endl;
         ;
     }
 

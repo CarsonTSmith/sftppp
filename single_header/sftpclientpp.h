@@ -77,8 +77,6 @@ class SFTPAttributes {
     SFTPAttributesPtr m_sftpAttributes;
 };
 
-#endif /* SFTP_ATTRIBUTE_H */
-
 class SFTPError {
    public:
     SFTPError(const int code = SSH_OK, const int sftpCode = SSH_FX_OK,
