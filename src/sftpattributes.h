@@ -32,6 +32,7 @@ class SFTPAttributes {
     using SFTPAttributesPtr = std::shared_ptr<sftp_attributes_struct>;
 
     SFTPAttributes(sftp_attributes attr) : m_sftpAttributes(attr, SFTPAttributesDeleter()) {}
+    SFTPAttributes() = default;
     ~SFTPAttributes() = default;
 
     SFTPAttributes(const SFTPAttributes& other) = default;
@@ -40,7 +41,7 @@ class SFTPAttributes {
     SFTPAttributes& operator=(const SFTPAttributes& other) = default;
     SFTPAttributes& operator=(SFTPAttributes&& other) = default;
 
-    sftp_attributes get() const { return m_sftpAttributes.get(); }
+    const SFTPAttributesPtr& get() const { return m_sftpAttributes; }
 
    private:
     struct SFTPAttributesDeleter {

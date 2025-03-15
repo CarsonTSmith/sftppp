@@ -24,15 +24,14 @@
 
 #include <iostream>
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     SFTPClient client;
     SFTPError ret = client.connect("127.0.0.1", "username", "password");
     if (ret.isOk()) {
         std::cout << "Connected!" << std::endl;
     }
 
-    ret = client.mkdir("test", 0777);
+    ret = client.mkdir("/my/remote/dir", 0777);
     if (ret.isOk()) {
         std::cout << "Remote directory created!" << std::endl;
     } else {
@@ -60,6 +59,28 @@ int main(int argc, char **argv)
         ;
     }
 
+    auto statPair = client.stat("/my/remote/file.txt");
+    if (statPair.first.isOk()) {
+        std::cout << "Stat successful!" << std::endl;
+
+        const auto &attr = statPair.second;
+
+        // name, group, owner fields are not included and won't work with sftp_stat()
+        std::cout << "size: " << attr.get()->size << std::endl;
+        std::cout << "permissions: " << attr.get()->permissions << std::endl;
+        std::cout << "uid: " << attr.get()->uid << std::endl;
+        std::cout << "gid: " << attr.get()->gid << std::endl;
+        std::cout << std::endl;
+    } else {
+        std::cout << "Failed to stat remote path: " 
+                  << ret.getSSHErrorCode() 
+                  << " " 
+                  << ret.getSFTPErrorCode()
+                  << " "
+                  << ret.getSSHErrorMsg()
+                  << std::endl;
+    }
+
     ret = client.get("/my/local/file.txt", "/my/remote/file.txt");
     if (ret.isOk()) {
         std::cout << "File downloaded!" << std::endl;
@@ -70,48 +91,44 @@ int main(int argc, char **argv)
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl
-        ;
+                  << std::endl;
     }
 
     ret = client.rm("/my/remote/file.txt");
     if (ret.isOk()) {
         std::cout << "Remote file deleted!" << std::endl;
     } else {
-        std::cout << "Failed to upload file: " 
+        std::cout << "Failed to remove file: " 
                   << ret.getSSHErrorCode() 
                   << " " 
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl
-        ;
+                  << std::endl;
     }
 
-    auto pair = client.ls("/my/remote/dir");
-    if (pair.first.isOk()) {
+    auto lsPair = client.ls("/my/remote/dir");
+    if (lsPair.first.isOk()) {
         std::cout << "Listing remote directory!" << std::endl;
-        for (const auto &item: pair.second) {
-            std::cout << "File name: " << item.get()->name << std::endl;
-            std::cout << "File size: " << item.get()->size << std::endl;
-            std::cout << "File permissions: " << item.get()->permissions << std::endl;
-            std::cout << "File owner: " << item.get()->owner << std::endl;
-            std::cout << "File uid: " << item.get()->uid << std::endl;
-            std::cout << "File group: " << item.get()->group << std::endl;
-            std::cout << "File gid: " << item.get()->gid << std::endl;
+        for (const auto &item: lsPair.second) {
+            std::cout << "name: " << item.get()->name << std::endl;
+            std::cout << "size: " << item.get()->size << std::endl;
+            std::cout << "permissions: " << item.get()->permissions << std::endl;
+            std::cout << "owner: " << item.get()->owner << std::endl;
+            std::cout << "uid: " << item.get()->uid << std::endl;
+            std::cout << "group: " << item.get()->group << std::endl;
+            std::cout << "gid: " << item.get()->gid << std::endl;
 
-            std::cout << std::endl;
             std::cout << std::endl;
         }
     } else {
-        std::cout << "Failed to upload file: " 
+        std::cout << "Failed to list remote directory: " 
                   << ret.getSSHErrorCode() 
                   << " " 
                   << ret.getSFTPErrorCode()
                   << " "
                   << ret.getSSHErrorMsg()
-                  << std::endl
-        ;
+                  << std::endl;
     }
 
     client.disconnect(); // RAII will take care of this in the destructor, but it shows intent.

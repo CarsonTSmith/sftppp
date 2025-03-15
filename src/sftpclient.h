@@ -87,6 +87,8 @@ class SFTPClient {
 
     SFTPError rmdir(const std::string& remoteDirName);
 
+    std::pair<SFTPError, SFTPAttributes> stat(const std::string& remotePath);
+
    private:
     struct SSHSessionDeleter {
         void operator()(ssh_session session) const;

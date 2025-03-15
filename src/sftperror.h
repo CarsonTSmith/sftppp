@@ -30,8 +30,9 @@
 
 class SFTPError {
    public:
-    SFTPError(const int code = SSH_OK, const int sftpCode = SSH_FX_OK,
-              const std::string& sshMsg = "");
+    SFTPError(const int sshCode = SSH_OK, const int sftpCode = SSH_FX_OK,
+              const std::string& sshMsg = "")
+        : m_sshCode(sshCode), m_sftpCode(sftpCode), m_sshErrorMsg(sshMsg) {}
 
     bool isOk() const { return m_sshCode == SSH_OK && m_sftpCode == SSH_FX_OK; }
 
