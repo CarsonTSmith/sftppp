@@ -13,6 +13,6 @@ To compile the example cd /examples and run the compile command
 g++ main.cpp -o main -lssh
 
 
-I noticed there weren't any good open source OOP C++ SFTP Clients, so I built my own.
+I noticed there weren't any open source OOP C++ SFTP Clients, so I built my own.
 
 Contributions are welcome. I know it's not perfect (I really should add known host support). Star it if you like it, thanks.
