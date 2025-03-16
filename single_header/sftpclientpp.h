@@ -261,7 +261,7 @@ SFTPError SFTPClient::put(const std::string& localFileName, const std::string& r
     return SFTPError();
 }
 
-SFTPError SFTPClient::get(const std::string& remoteFileName, const std::string& localFileName,
+SFTPError SFTPClient::get(const std::string& localFileName, const std::string& remoteFileName,
                           unsigned int chunkSize) const {
     if (!m_sftpSession.get() || !m_sshSession.get()) {
         return SFTPError(SSH_ERROR, SSH_FX_FAILURE, "Invalid SFTP or SSH session");
