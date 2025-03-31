@@ -27,6 +27,8 @@
 
 #include <memory>
 
+namespace cts {
+
 class SFTPAttributes {
    public:
     using SFTPAttributesPtr = std::shared_ptr<sftp_attributes_struct>;
@@ -54,5 +56,7 @@ class SFTPAttributes {
 
     SFTPAttributesPtr m_sftpAttributes;
 };
+
+}  // namespace cts
 
 #endif /* SFTP_ATTRIBUTE_H */

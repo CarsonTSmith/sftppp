@@ -24,6 +24,8 @@
 
 #include <iostream>
 
+using namespace cts;
+
 int main(int argc, char **argv) {
     SFTPClient client;
     SFTPError ret = client.connect("127.0.0.1", "username", "password");

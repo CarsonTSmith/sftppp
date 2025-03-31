@@ -55,6 +55,8 @@
 #include "sftpattributes.h"
 #include "sftperror.h"
 
+namespace cts {
+
 class SFTPClient {
    public:
     SFTPClient() = default;
@@ -112,5 +114,7 @@ class SFTPClient {
     static constexpr unsigned int kDefaultChunkSize = 16 * 1024;
     static constexpr unsigned int kMaxChunkSize = 32 * 1024;
 };
+
+}  // namespace cts
 
 #endif /* SFTP_CLIENT_H */

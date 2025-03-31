@@ -51,6 +51,8 @@
 #include <string>
 #include <vector>
 
+namespace cts {
+
 class SFTPAttributes {
    public:
     using SFTPAttributesPtr = std::shared_ptr<sftp_attributes_struct>;
@@ -448,3 +450,5 @@ void SFTPClient::SFTPFileDeleter::operator()(sftp_file file) const {
         sftp_close(file);
     }
 }
+
+} // namespace cts

@@ -28,6 +28,8 @@
 
 #include <string>
 
+namespace cts {
+
 class SFTPError {
    public:
     SFTPError(const int sshCode = SSH_OK, const int sftpCode = SSH_FX_OK,
@@ -47,5 +49,7 @@ class SFTPError {
     int m_sftpCode;
     std::string m_sshErrorMsg;
 };
+
+}  // namespace cts
 
 #endif /* SFTP_ERROR_H */
